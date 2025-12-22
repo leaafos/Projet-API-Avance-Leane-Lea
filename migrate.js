@@ -1,6 +1,13 @@
 const connection = require('./models/connection');
 
+// Importer tous les modèles
 require('./models/user');
+require('./models/author');
+require('./models/category');
+require('./models/book');
+
+// Importer les associations
+require('./models/associations');
 
 connection
     .sync({

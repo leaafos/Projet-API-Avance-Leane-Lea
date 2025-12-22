@@ -1,0 +1,32 @@
+{
+  "name": "app",
+  "version": "3.0.0",
+  "description": "",
+  "homepage": "https://github.com/leaafos/Projet-API-Avance-Leane-Lea#readme",
+  "bugs": {
+    "url": "https://github.com/leaafos/Projet-API-Avance-Leane-Lea/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leaafos/Projet-API-Avance-Leane-Lea.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "node migrate.js",
+    "dev": "node --watch server.js",
+    "dev:windows": "nodemon -L server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "i18next": "^25.7.2",
+    "papaparse": "^5.5.3",
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7",
+    "xml2js": "^0.6.2"
+  }
+}

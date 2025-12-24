@@ -29,4 +29,4 @@ Author.init(
 );
 
 
-module.exports = User;
+module.exports = Author;

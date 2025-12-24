@@ -1,0 +1,30 @@
+### Collection GET
+GET http://localhost:3000/books
+Content-Type: application/json
+
+### Collection POST
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "name": "Livre",
+  "date_of_publication": "2023-12-23",
+  "synopsis": "Un très bon livre",
+  "author_id": 1,
+  "category_id": 1
+}
+
+### Item GET
+GET http://localhost:3000/books/1
+Content-Type: application/json
+
+### Item PATCH 
+PATCH http://localhost:3000/books/1
+Content-type: application/json
+
+{
+  "completed": true
+}
+
+### Item DELETE
+DELETE http://localhost:3000/books/-1

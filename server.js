@@ -10,8 +10,8 @@ app.use(express.json());
 
 // app.use(translateMiddleware); 
 // app.use(formatMiddleware); 
-
-// app.use(require("./routes/users.js")); 
+app.use(require("./routes/users.js")); 
+app.use(require("./routes/books.js"));
 
 app.listen(process.env.PORT, () => { 
   console.log(`Server is listening on port ${process.env.PORT}`); 

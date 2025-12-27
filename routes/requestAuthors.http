@@ -1,0 +1,30 @@
+### Collection GET
+GET http://localhost:3000/authors
+Content-Type: application/json
+
+### Collection POST
+POST http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "firstName": "Léane",
+  "lastName": "Leclercq",
+  "bio": "Autrice depuis son plus jeune âge",
+  "birthDate": "2004-09-28",
+  "nationality": "Française"
+}
+
+### Item GET
+GET http://localhost:3000/authors/1
+Content-Type: application/json
+
+### Item PATCH 
+PATCH http://localhost:3000/authors/1
+Content-type: application/json
+
+{
+  "bio": "Biographie mise à jour"
+}
+
+### Item DELETE
+DELETE http://localhost:3000/authors/-1

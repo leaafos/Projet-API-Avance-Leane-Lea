@@ -2,7 +2,13 @@ const CategoryModel = require("../models/category.js");
 
 module.exports = {
   cget: async (req, res, next) => {
-    res.json(await CategoryModel.findAll());
+    const categories = await CategoryModel.findAll();
+    const translatedCategories = categories.map((category) => {
+      const categoryData = category.toJSON();
+      categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;
+      return categoryData;
+    });
+    res.json(translatedCategories);
   },
   post: async (req, res, next) => {
     const newData = req.body;
@@ -12,7 +18,9 @@ module.exports = {
   get: async (req, res, next) => {
     const category = await CategoryModel.findByPk(req.params.id);
     if (category) {
-      res.json(category);
+      const categoryData = category.toJSON();
+      categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;
+      res.json(categoryData);
     } else {
       res.sendStatus(404);
     }

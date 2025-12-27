@@ -1,8 +1,24 @@
 const BookModel = require("../models/book.js");
+const { Author, Category } = require("../models/associations");
 
 module.exports = {
   cget: async (req, res, next) => {
-    res.json(await BookModel.findAll());
+    const books = await BookModel.findAll({
+      include: [
+        { model: Author, as: 'author' },
+        { model: Category, as: 'category' }
+      ]
+    });
+      const translatedBooks = books.map((book) => {
+      const bookData = book.toJSON();
+      bookData.name_translated = res.trad(bookData.name) || bookData.name;
+      if (bookData.category) {
+        bookData.category.name_translated = res.trad(bookData.category.name) || bookData.category.name;
+      }
+      return bookData;
+    });
+    
+    res.json(translatedBooks);
   },
   post: async (req, res, next) => {
     const newData = req.body;
@@ -10,9 +26,20 @@ module.exports = {
     res.status(201).json(newBook);
   },
   get: async (req, res, next) => {
-    const book = await BookModel.findByPk(req.params.id);
+    const book = await BookModel.findByPk(req.params.id, {
+      include: [
+        { model: Author, as: 'author' },
+        { model: Category, as: 'category' }
+      ]
+    });
+    
     if (book) {
-      res.json(book);
+      const bookData = book.toJSON();
+      bookData.name_translated = res.trad(bookData.name) || bookData.name;
+      if (bookData.category) {
+        bookData.category.name_translated = res.trad(bookData.category.name) || bookData.category.name;
+      }
+      res.json(bookData);
     } else {
       res.sendStatus(404);
     }

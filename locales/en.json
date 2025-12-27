@@ -1,0 +1,16 @@
+{
+  "translation": {
+    "Les Misérables": "The Wretched",
+    "Notre-Dame de Paris": "The Hunchback of Notre-Dame",
+    "Vingt mille lieues sous les mers": "Twenty Thousand Leagues Under the Sea", 
+    "Le Tour du monde en quatre-vingts jours": "Around the World in Eighty Days",
+    "Voyage au centre de la Terre": "Journey to the Center of the Earth",
+    "Roman": "Novel",
+    "Science-Fiction": "Science Fiction",
+    "Romance": "Romance",
+    "completed": "completed",
+    "not-completed": "not completed", 
+    "activated": "activated",
+    "not-activated": "not activated"
+  }
+}

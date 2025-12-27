@@ -1,0 +1,16 @@
+{
+  "translation": {
+    "Les Misérables": "Nędznicy",
+    "Notre-Dame de Paris": "Dzwonnik z Notre-Dame",
+    "Vingt mille lieues sous les mers": "Dwadzieścia tysięcy mil podmorskiej żeglugi",
+    "Le Tour du monde en quatre-vingts jours": "W osiemdziesiąt dni dookoła świata", 
+    "Voyage au centre de la Terre": "Podróż do wnętrza Ziemi",
+    "Roman": "Powieść",
+    "Science-Fiction": "Fantastyka Naukowa",
+    "Romance": "Romans",
+    "completed": "ukończone",
+    "not-completed": "nie ukończone",
+    "activated": "aktywowane", 
+    "not-activated": "nie aktywowane"
+  }
+}

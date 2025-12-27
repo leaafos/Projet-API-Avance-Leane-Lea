@@ -1,0 +1,16 @@
+{
+  "translation": {
+    "Les Misérables": "Los Miserables",
+    "Notre-Dame de Paris": "Nuestra Señora de París",
+    "Vingt mille lieues sous les mers": "Veinte mil leguas de viaje submarino",
+    "Le Tour du monde en quatre-vingts jours": "La vuelta al mundo en ochenta días", 
+    "Voyage au centre de la Terre": "Viaje al centro de la Tierra",
+    "Roman": "Novela",
+    "Science-Fiction": "Ciencia Ficción",
+    "Romance": "Romance",
+    "completed": "completado",
+    "not-completed": "no completado",
+    "activated": "activado", 
+    "not-activated": "no activado"
+  }
+}

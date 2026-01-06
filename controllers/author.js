@@ -2,7 +2,17 @@ const AuthorModel = require("../models/author.js");
 
 module.exports = {
   cget: async (req, res, next) => {
-    res.json(await AuthorModel.findAll());
+    const { pagination, filters } = res.getPagination();
+    
+    const { count, rows: authors } = await AuthorModel.findAndCountAll({
+      where: filters,
+      ...pagination,
+    });
+    
+    // Configurer HATEOAS avec le nombre total d'éléments
+    res.setHateoas({ count });
+    
+    res.json(authors);
   },
   post: async (req, res, next) => {
     const newData = req.body;

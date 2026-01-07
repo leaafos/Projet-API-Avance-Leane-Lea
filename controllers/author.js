@@ -33,7 +33,7 @@ module.exports = {
     try {
       const author = await AuthorModel.findByPk(req.params.id);
       if (author) {
-        res.render(author);
+        res.json(author);
       } else {
         res.sendStatus(404);
       }
@@ -53,7 +53,7 @@ module.exports = {
       if (nbUpdated === 0) {
         res.sendStatus(404);
       } else {
-        res.render(updatedAuthor);
+        res.json(updatedAuthor);
       }
     } catch (error) {
       next(error);
@@ -79,7 +79,7 @@ module.exports = {
   
   activate: async (req, res, next) => {
     try {
-      const [nbUpdated] = await AuthorModel.update(
+      const nbUpdated = await AuthorModel.update(
         {
           activated: true,
         },

@@ -3,6 +3,21 @@ const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
+    const { pagination, filters } = res.getPagination();
+    
+    const { count, rows: categories } = await CategoryModel.findAndCountAll({
+      where: filters,
+      ...pagination,
+    });
+    
+    res.setHateoas({ count });
+    
+    const translatedCategories = categories.map((category) => {
+      const categoryData = category.toJSON();
+      categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;
+      return categoryData;
+    });
+    res.json(translatedCategories);
     try {
       const { pagination, filters } = res.getPagination();
       
@@ -11,10 +26,8 @@ module.exports = {
         ...pagination,
       });
       
-      // Configurer HATEOAS avec le nombre total d'éléments
       res.setHateoas({ count });
       
-      // Traduire les catégories
       const translatedCategories = categories.map((category) => {
         const categoryData = category.toJSON();
         categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;

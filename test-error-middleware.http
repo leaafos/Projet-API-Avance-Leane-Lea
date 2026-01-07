@@ -1,0 +1,68 @@
+### Test du middleware d'erreur - Validation
+### Ces requêtes vont déclencher des erreurs au format standardisé 422
+
+### POST Author sans firstName (champ requis)
+POST http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "bio": "Test bio"
+}
+
+###
+
+### POST Author avec firstName trop court
+POST http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "firstName": "A",
+  "lastName": "Test",
+  "bio": "Bio de test"
+} 
+
+###
+
+### POST Author avec date future (birthDate invalide)
+POST http://localhost:3000/authors
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe", 
+  "bio": "Bio de test",
+  "birthDate": "2030-01-01"
+}
+
+###
+
+### POST Book sans titre (champ requis)
+POST http://localhost:3000/books
+Content-Type: application/json
+
+{
+  "synopsis": "Un synopsis sans titre ni date"
+}
+
+###
+
+### POST User avec mot de passe trop court
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "username": "",
+  "password": "123"
+}
+
+###
+
+### POST Category sans nom (champ requis)
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "description": "Description sans nom"
+}
+
+###

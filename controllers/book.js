@@ -29,14 +29,27 @@ module.exports = {
   },
 
   cget: async (req, res, next) => {
+<<<<<<< HEAD
     const apiVersion = getAskedVersion(req);
     const books = await BookModel.findAll({
+=======
+    const { pagination, filters } = res.getPagination();
+    
+    const { count, rows: books } = await BookModel.findAndCountAll({
+      where: filters,
+>>>>>>> 3e61c51004dbb488b3902d103ce5c820094b884c
       include: [
         { model: Author, as: 'author' },
         { model: Category, as: 'category' }
-      ]
+      ],
+      ...pagination,
     });
-      const translatedBooks = books.map((book) => {
+    
+    // Configurer HATEOAS avec le nombre total d'éléments
+    res.setHateoas({ count });
+    
+    // Traduire les livres et catégories
+    const translatedBooks = books.map((book) => {
       const bookData = book.toJSON();
       bookData.name_translated = res.trad(bookData.name) || bookData.name;
       if (bookData.category) {

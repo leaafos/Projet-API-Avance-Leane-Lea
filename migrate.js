@@ -1,6 +1,5 @@
 const connection = require('./models/connection');
 
-// Importer tous les modèles
 require('./models/user');
 require('./models/author');
 require('./models/category');

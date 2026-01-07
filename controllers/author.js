@@ -3,8 +3,22 @@ const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
+<<<<<<< HEAD
     const apiVersion = getAskedVersion(req);
     res.json(await AuthorModel.findAll());
+=======
+    const { pagination, filters } = res.getPagination();
+    
+    const { count, rows: authors } = await AuthorModel.findAndCountAll({
+      where: filters,
+      ...pagination,
+    });
+    
+    // Configurer HATEOAS avec le nombre total d'éléments
+    res.setHateoas({ count });
+    
+    res.json(authors);
+>>>>>>> 3e61c51004dbb488b3902d103ce5c820094b884c
   },
   post: async (req, res, next) => {
     const newData = req.body;

@@ -1,12 +1,18 @@
 const AuthorModel = require("../models/author.js");
+
+const Papa = require("papaparse");
+
+module.exports = {
+  cget: async (req, res, next) => {
+    const authors = await AuthorModel.findAll();
+    res.render(authors);
 const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
-<<<<<<< HEAD
+
     const apiVersion = getAskedVersion(req);
     res.json(await AuthorModel.findAll());
-=======
     const { pagination, filters } = res.getPagination();
     
     const { count, rows: authors } = await AuthorModel.findAndCountAll({
@@ -18,17 +24,19 @@ module.exports = {
     res.setHateoas({ count });
     
     res.json(authors);
->>>>>>> 3e61c51004dbb488b3902d103ce5c820094b884c
+
   },
   post: async (req, res, next) => {
+    console.log('req.body:', req.body);
     const newData = req.body;
     const newAuthor = await AuthorModel.create(newData);
-    res.status(201).json(newAuthor);
+    res.render(newAuthor);
   },
+
   get: async (req, res, next) => {
     const author = await AuthorModel.findByPk(req.params.id);
     if (author) {
-      res.json(author);
+      res.render(author);
     } else {
       res.sendStatus(404);
     }
@@ -43,7 +51,7 @@ module.exports = {
     if (nbUpdated === 0) {
       res.sendStatus(404);
     } else {
-      res.json(updatedAuthor);
+      res.render(updatedAuthor);
     }
   },
   delete: async (req, res, next) => {

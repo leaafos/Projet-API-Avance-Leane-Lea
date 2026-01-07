@@ -5,6 +5,7 @@ module.exports = {
   cget: async (req, res, next) => {
     const apiVersion = getAskedVersion(req);
     const categories = await CategoryModel.findAll();
+    res.render(categories);
     const { pagination, filters } = res.getPagination();
     
     const { count, rows: categories } = await CategoryModel.findAndCountAll({
@@ -12,7 +13,6 @@ module.exports = {
       ...pagination,
     });
     
-    // Configurer HATEOAS avec le nombre total d'éléments
     res.setHateoas({ count });
     
     const translatedCategories = categories.map((category) => {
@@ -25,6 +25,7 @@ module.exports = {
   post: async (req, res, next) => {
     const newData = req.body;
     const newCategory = await CategoryModel.create(newData);
+    res.render(newCategory);
     res.status(201).json(newCategory);
   },
   get: async (req, res, next) => {
@@ -32,7 +33,7 @@ module.exports = {
     if (category) {
       const categoryData = category.toJSON();
       categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;
-      res.json(categoryData);
+      res.render(categoryData);
     } else {
       res.sendStatus(404);
     }
@@ -47,7 +48,7 @@ module.exports = {
     if (nbUpdated === 0) {
       res.sendStatus(404);
     } else {
-      res.json(updatedCategory);
+      res.render(updatedCategory);
     }
   },
   delete: async (req, res, next) => {

@@ -1,7 +1,7 @@
 const express = require('express');
 const { format } = require('sequelize/lib/utils');
 const connection = require('./models/connection');
-// const formatMiddleware = require('./middlewares/formatMiddleware.js');
+const formatingMiddleware = require('./middlewares/formatingMiddleware.js');
 const translateMiddleware = require('./middlewares/translateMiddleware.js');
 
 const app = express();
@@ -9,8 +9,8 @@ const app = express();
 app.use(express.json()); 
 
 app.use(translateMiddleware); 
+app.use(formatingMiddleware); 
 app.use(hateoasMiddleware);
-// app.use(formatMiddleware); 
 app.use(versioningMiddleware);
 app.use(require("./routes/users.js")); 
 app.use(require("./routes/books.js"));

@@ -11,6 +11,7 @@ module.exports = {
         { model: Category, as: 'category' }
       ]
     });
+      res.render(books);
       const translatedBooks = books.map((book) => {
       const bookData = book.toJSON();
       bookData.name_translated = res.trad(bookData.name) || bookData.name;
@@ -19,7 +20,6 @@ module.exports = {
       }
       return bookData;
     });
-    
     res.json(translatedBooks);
   },
 
@@ -63,7 +63,7 @@ module.exports = {
   post: async (req, res, next) => {
     const newData = req.body;
     const newBook = await BookModel.create(newData);
-    res.status(201).json(newBook);
+    res.render(newBook);
   },
   get: async (req, res, next) => {
     const book = await BookModel.findByPk(req.params.id, {
@@ -79,7 +79,7 @@ module.exports = {
       if (bookData.category) {
         bookData.category.name_translated = res.trad(bookData.category.name) || bookData.category.name;
       }
-      res.json(bookData);
+      res.render(bookData);
     } else {
       res.sendStatus(404);
     }
@@ -94,7 +94,7 @@ module.exports = {
     if (nbUpdated === 0) {
       res.sendStatus(404);
     } else {
-      res.json(updatedBook);
+      res.render(updatedBook);
     }
   },
   delete: async (req, res, next) => {

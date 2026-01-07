@@ -2,6 +2,21 @@ const CategoryModel = require("../models/category.js");
 const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
+  cgetV1: async (req, res, next) => {
+  try {
+    const apiVersion = getAskedVersion(req);
+    const categories = await CategoryModel.findAll();
+    return res.render(categories);
+  } catch (error) {
+    return next(error);
+  }
+},
+
+  cgetV2: async (req, res, next) => {
+  const apiVersion = getAskedVersion(req);
+  return module.exports.cget(req, res, next); // v2 = ta version complète actuelle
+},
+
   cget: async (req, res, next) => {
     try {
       const { pagination, filters } = res.getPagination();

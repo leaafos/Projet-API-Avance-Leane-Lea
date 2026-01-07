@@ -1,6 +1,7 @@
 ### Collection GET
 GET http://localhost:3000/authors
-Accept: : application/json
+Accept: application/json
+x-api-version: v1
 
 ### Collection GET avec pagination HATEOAS
 GET http://localhost:3000/authors?page=1&itemsPerPage=2

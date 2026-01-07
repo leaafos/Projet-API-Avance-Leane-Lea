@@ -1,10 +1,18 @@
 const { Router } = require("express");
 const CategoryController = require("../controllers/category.js");
+const apiVersioning = require("../middlewares/versioningMiddleware.js");
 
 const router = new Router();
 
 // Collection GET
-router.get("/categories", CategoryController.cget);
+router.get(
+  "/categories",
+  apiVersioning({
+    v1: CategoryController.cgetV1,
+    v2: CategoryController.cgetV2,
+    default: CategoryController.cget,
+  })
+);
 
 // Collection POST
 router.post("/categories", CategoryController.post);

@@ -2,6 +2,20 @@ const UserModel = require("../models/user.js");
 const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
+  cgetV1: async (req, res, next) => {
+  try {
+    const apiVersion = getAskedVersion(req);
+    const users = await UserModel.findAll();
+    return res.render(users);
+  } catch (error) {
+    return next(error);
+  }
+},
+
+  cgetV2: async (req, res, next) => {
+  const apiVersion = getAskedVersion(req);
+    return module.exports.cget(req, res, next); 
+},
   cget: async (req, res, next) => {
     try {
       const { pagination, filters } = res.getPagination();

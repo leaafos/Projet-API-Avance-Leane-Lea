@@ -9,7 +9,6 @@ module.exports = {
       ...pagination,
     });
     
-    // Configurer HATEOAS avec le nombre total d'éléments
     res.setHateoas({ count });
     
     const translatedCategories = categories.map((category) => {

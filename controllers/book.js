@@ -14,10 +14,8 @@ module.exports = {
       ...pagination,
     });
     
-    // Configurer HATEOAS avec le nombre total d'éléments
     res.setHateoas({ count });
     
-    // Traduire les livres et catégories
     const translatedBooks = books.map((book) => {
       const bookData = book.toJSON();
       bookData.name_translated = res.trad(bookData.name) || bookData.name;

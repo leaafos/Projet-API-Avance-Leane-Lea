@@ -2,32 +2,34 @@ const UserModel = require("../models/user.js");
 
 module.exports = {
   cget: async (req, res, next) => {
-    res.json(await UserModel.findAll());
+    const users = await UserModel.findAll();
+    res.render(users);
   },
   post: async (req, res, next) => {
     const newData = req.body;
     const newUser = await UserModel.create(newData);
-    res.status(201).json(newUser);
+    res.render(newUser);
   },
   get: async (req, res, next) => {
     const user = await UserModel.findByPk(req.params.id);
     if (user) {
-      res.json(user);
+      res.render(user);
     } else {
       res.sendStatus(404);
     }
   },
   patch: async (req, res, next) => {
-    const [nbUpdated, [updatedUser]] = await UserModel.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-      returning: true,
-    });
-    if (nbUpdated === 0) {
-      res.sendStatus(404);
-    } else {
-      res.json(updatedUser);
+  try {
+    const user = await UserModel.findByPk(req.params.id);
+    if (!user) return res.sendStatus(404);
+
+    Object.assign(user, req.body);
+
+    await user.save();
+
+    return res.render(user);
+    } catch (err) {
+    return next(err);
     }
   },
   delete: async (req, res, next) => {

@@ -1,13 +1,14 @@
 ### Collection GET
 GET http://localhost:3000/authors
-Content-Type: application/json
+Accept: : application/json
 
 ### Collection POST
 POST http://localhost:3000/authors
+Accept: text/csv
 Content-Type: application/json
 
 {
-  "firstName": "Léane",
+  "firstName": "Pierrick",
   "lastName": "Leclercq",
   "bio": "Autrice depuis son plus jeune âge",
   "birthDate": "2004-09-28",
@@ -15,11 +16,13 @@ Content-Type: application/json
 }
 
 ### Item GET
-GET http://localhost:3000/authors/1
+GET http://localhost:3000/authors/3
+Accept: text/xml
 Content-Type: application/json
 
 ### Item PATCH 
-PATCH http://localhost:3000/authors/1
+PATCH http://localhost:3000/authors/6
+Accept: text/xml
 Content-type: application/json
 
 {
@@ -27,4 +30,4 @@ Content-type: application/json
 }
 
 ### Item DELETE
-DELETE http://localhost:3000/authors/-1
+DELETE http://localhost:3000/authors/9

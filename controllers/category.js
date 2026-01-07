@@ -3,6 +3,7 @@ const CategoryModel = require("../models/category.js");
 module.exports = {
   cget: async (req, res, next) => {
     const categories = await CategoryModel.findAll();
+    res.render(categories);
     const translatedCategories = categories.map((category) => {
       const categoryData = category.toJSON();
       categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;
@@ -13,6 +14,7 @@ module.exports = {
   post: async (req, res, next) => {
     const newData = req.body;
     const newCategory = await CategoryModel.create(newData);
+    res.render(newCategory);
     res.status(201).json(newCategory);
   },
   get: async (req, res, next) => {
@@ -20,7 +22,7 @@ module.exports = {
     if (category) {
       const categoryData = category.toJSON();
       categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;
-      res.json(categoryData);
+      res.render(categoryData);
     } else {
       res.sendStatus(404);
     }
@@ -35,7 +37,7 @@ module.exports = {
     if (nbUpdated === 0) {
       res.sendStatus(404);
     } else {
-      res.json(updatedCategory);
+      res.render(updatedCategory);
     }
   },
   delete: async (req, res, next) => {

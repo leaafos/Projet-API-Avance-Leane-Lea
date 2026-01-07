@@ -1,4 +1,5 @@
 const AuthorModel = require("../models/author.js");
+const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
@@ -12,20 +13,22 @@ module.exports = {
       
       res.setHateoas({ count });
       
-      res.json(authors);
+      res.render(authors);
     } catch (error) {
       next(error);
     }
   },
+  
   post: async (req, res, next) => {
     try {
       const newData = req.body;
       const newAuthor = await AuthorModel.create(newData);
-      res.status(201).json(newAuthor);
+      res.status(201).render(newAuthor);
     } catch (error) {
       next(error);
     }
   },
+
   get: async (req, res, next) => {
     try {
       const author = await AuthorModel.findByPk(req.params.id);
@@ -38,6 +41,7 @@ module.exports = {
       next(error);
     }
   },
+  
   patch: async (req, res, next) => {
     try {
       const [nbUpdated, [updatedAuthor]] = await AuthorModel.update(req.body, {
@@ -55,6 +59,7 @@ module.exports = {
       next(error);
     }
   },
+  
   delete: async (req, res, next) => {
     try {
       const nbDeleted = await AuthorModel.destroy({
@@ -71,6 +76,7 @@ module.exports = {
       next(error);
     }
   },
+  
   activate: async (req, res, next) => {
     try {
       const nbUpdated = await AuthorModel.update(

@@ -1,10 +1,17 @@
 const { Router } = require("express");
 const BookController = require("../controllers/book.js");
+const apiVersioning = require("../middlewares/versioningMiddleware.js");
 
 const router = new Router();
 
 // Collection GET
-router.get("/books", BookController.cget);
+router.get("/books",
+    apiVersioning({
+        v1: BookController.cgetV1,
+        v2: BookController.cgetV2,
+        default: BookController.cget
+    })
+);
 
 // Collection POST
 router.post("/books", BookController.post);

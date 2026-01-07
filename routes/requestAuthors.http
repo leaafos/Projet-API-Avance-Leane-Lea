@@ -1,8 +1,17 @@
 ### Collection GET
 GET http://localhost:3000/authors
-Accept: : application/json
+Accept-Language: pl
+Accept: application/json
 
-### Collection GET avec pagination HATEOAS
+### Collection GET - Format CSV
+GET http://localhost:3000/authors
+Accept: text/csv
+
+### Collection GET - Format XML
+GET http://localhost:3000/authors
+Accept: text/xml
+
+### Collection GET avec pagination
 GET http://localhost:3000/authors?page=1&itemsPerPage=2
 Content-Type: application/json
 

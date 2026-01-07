@@ -33,5 +33,7 @@ Category.init(
     }
 );
 
+// Déclaration des champs traduisibles
+Category.translatableFields = ['name'];
 
 module.exports = Category;

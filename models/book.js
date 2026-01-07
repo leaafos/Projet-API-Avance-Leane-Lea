@@ -82,4 +82,7 @@ Book.init(
     }
 );
 
+// Déclaration des champs traduisibles
+Book.translatableFields = ['name'];
+
 module.exports = Book;

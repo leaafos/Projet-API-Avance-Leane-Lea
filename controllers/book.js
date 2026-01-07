@@ -4,29 +4,6 @@ const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
-    const { pagination, filters } = res.getPagination();
-    
-    const { count, rows: books } = await BookModel.findAndCountAll({
-      where: filters,
-      include: [
-        { model: Author, as: 'author' },
-        { model: Category, as: 'category' }
-      ],
-      ...pagination,
-    });
-    
-    res.setHateoas({ count });
-    
-    const translatedBooks = books.map((book) => {
-      const bookData = book.toJSON();
-      bookData.name_translated = res.trad(bookData.name) || bookData.name;
-      if (bookData.category) {
-        bookData.category.name_translated = res.trad(bookData.category.name) || bookData.category.name;
-      }
-      return bookData;
-    });
-    
-    res.json(translatedBooks);
     try {
       const { pagination, filters } = res.getPagination();
       
@@ -39,20 +16,8 @@ module.exports = {
         ...pagination,
       });
       
-      // Configurer HATEOAS avec le nombre total d'éléments
       res.setHateoas({ count });
-      
-      // Traduire les livres et catégories
-      const translatedBooks = books.map((book) => {
-        const bookData = book.toJSON();
-        bookData.name_translated = res.trad(bookData.name) || bookData.name;
-        if (bookData.category) {
-          bookData.category.name_translated = res.trad(bookData.category.name) || bookData.category.name;
-        }
-        return bookData;
-      });
-      
-      res.render(translatedBooks);
+      res.render(books);
     } catch (error) {
       next(error);
     }
@@ -87,12 +52,7 @@ module.exports = {
       });
       
       if (book) {
-        const bookData = book.toJSON();
-        bookData.name_translated = res.trad(bookData.name) || bookData.name;
-        if (bookData.category) {
-          bookData.category.name_translated = res.trad(bookData.category.name) || bookData.category.name;
-        }
-        res.render(bookData);
+        res.render(book);
       } else {
         res.sendStatus(404);
       }

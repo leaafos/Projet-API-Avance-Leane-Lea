@@ -1,23 +1,7 @@
 const CategoryModel = require("../models/category.js");
 const getAskedVersion = require("../lib/versioning.js");
 
-module.exports = {
-  cget: async (req, res, next) => {
-    const { pagination, filters } = res.getPagination();
-    
-    const { count, rows: categories } = await CategoryModel.findAndCountAll({
-      where: filters,
-      ...pagination,
-    });
-    
-    res.setHateoas({ count });
-    
-    const translatedCategories = categories.map((category) => {
-      const categoryData = category.toJSON();
-      categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;
-      return categoryData;
-    });
-    res.json(translatedCategories);
+module.exports = {  cget: async (req, res, next) => {
     try {
       const { pagination, filters } = res.getPagination();
       
@@ -27,14 +11,7 @@ module.exports = {
       });
       
       res.setHateoas({ count });
-      
-      const translatedCategories = categories.map((category) => {
-        const categoryData = category.toJSON();
-        categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;
-        return categoryData;
-      });
-      
-      res.render(translatedCategories);
+      res.render(categories);
     } catch (error) {
       next(error);
     }
@@ -54,9 +31,7 @@ module.exports = {
     try {
       const category = await CategoryModel.findByPk(req.params.id);
       if (category) {
-        const categoryData = category.toJSON();
-        categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;
-        res.render(categoryData);
+        res.render(category);
       } else {
         res.sendStatus(404);
       }

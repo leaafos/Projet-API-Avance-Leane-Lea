@@ -3,7 +3,13 @@ const xml2js = require("xml2js");
 
 module.exports = (req, res, next) => {
     res.render = function (data) {
-        const items = Array.isArray(data) ? data : [data];
+        // Appliquer les traductions automatiques si disponibles
+        let processedData = data;
+        if (res.applyTranslations) {
+            processedData = res.applyTranslations(data);
+        }
+        
+        const items = Array.isArray(processedData) ? processedData : [processedData];
         const name = items[0].constructor && items[0].constructor.name ? items[0].constructor.name.toLowerCase() : 'item'; 
         res.format({
             'text/csv' () {
@@ -11,14 +17,20 @@ module.exports = (req, res, next) => {
                 res.setHeader('Content-type', 'text/csv');
                 res.send(csv);
             },
-            'text/xml' () {
+            'text/xml': () => {
                 const builder = new xml2js.Builder();
                 const xml = builder.buildObject({[name + "s"]: items.map((item) => ({[name]: item.dataValues || item}))});
                 res.setHeader('Content-type', 'text/xml');
                 res.send(xml);
             },
+            'application/xml': () => {
+                const builder = new xml2js.Builder();
+                const xml = builder.buildObject({[name + "s"]: items.map((item) => ({[name]: item.dataValues || item}))});
+                res.setHeader('Content-type', 'application/xml');
+                res.send(xml);
+            },
             default() {
-                res.json(data);
+                res.json(processedData);
             }
         });
     };

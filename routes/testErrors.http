@@ -1,5 +1,4 @@
 ### Test d'erreurs - Validation
-### Ces requêtes vont déclencher des erreurs au format standardisé 422
 
 ### POST Author sans champs requis
 POST http://localhost:3000/authors

@@ -1,16 +1,33 @@
 ### Collection GET
 GET http://localhost:3000/categories
-Content-Type: application/json
-Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
-# Anglais (priorité) Accept-Language: en-US,en;q=0.9,fr;q=0.8,es;q=0.7
-# Espagnol (priorité) Accept-Language: es-ES,es;q=0.9,en-US;q=0.8,fr;q=0.7
-# Polonais (priorité) Accept-Language: pl-PL,pl;q=0.9,en;q=0.8,fr;q=0.7
+Accept-Language: es
+Accept: application/json
+
+### Collection GET XML
+GET http://localhost:3000/categories
+Accept-Language: es
 Accept: text/xml
 
-### Collection GET avec pagination HATEOAS 
+### Collection GET CSV
+GET http://localhost:3000/categories
+Accept-Language: fr
+Accept: text/csv
+
+### Collection GET avec pagination
 GET http://localhost:3000/categories?page=1&itemsPerPage=2
 Content-Type: application/json
 Accept-Language: en
+Accept: application/json
+
+### Single item
+GET http://localhost:3000/categories/1
+Accept-Language: fr-FR,fr;q=0.9
+Accept: application/json
+
+### Single item XML
+GET http://localhost:3000/categories/2
+Accept-Language: es-ES,es;q=0.9
+Accept: text/xml
 
 
 ### Collection POST

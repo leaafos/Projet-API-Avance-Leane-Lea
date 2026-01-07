@@ -1,16 +1,22 @@
 ### Collection GET
 GET http://localhost:3000/books
-Content-Type: application/json
-Accept-Language: fr-FR,fr;q=0.9,en;q=0.8
-# Anglais (priorité) Accept-Language: en-US,en;q=0.9,fr;q=0.8,es;q=0.7
-# Espagnol (priorité) Accept-Language: es-ES,es;q=0.9,en-US;q=0.8,fr;q=0.7
-# Polonais (priorité) Accept-Language: pl-PL,pl;q=0.9,en;q=0.8,fr;q=0.7
+Accept-Language: fr
 Accept: application/json
 
-### Collection GET avec pagination HATEOAS 
+### Collection GET avec pagination
 GET http://localhost:3000/books?page=1&itemsPerPage=3
-Content-Type: application/json
-Accept-Language: en
+Accept-Language: es
+Accept: application/json
+
+### Test Format CSV
+GET http://localhost:3000/books
+Accept-Language: fr
+Accept: text/csv
+
+### Test Format XML
+GET http://localhost:3000/books?page=1&itemsPerPage=2
+Accept-Language: es
+Accept: text/xml
 
 ### Collection POST
 POST http://localhost:3000/books
@@ -26,9 +32,8 @@ Accept: application/json
 }
 
 ### Item GET
-GET http://localhost:3000/books/21
-Content-Type: application/json
-Accept-Language: fr-FR,fr;q=0.9,en;q=0.8
+GET http://localhost:3000/books/2
+Accept-Language: fr
 Accept: application/json
 
 ### Item PATCH 

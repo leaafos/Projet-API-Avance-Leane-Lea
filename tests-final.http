@@ -1,0 +1,72 @@
+### API Tests - Tous les middlewares fonctionnent ensemble
+### Traduction automatique, formatage (JSON/XML/CSV), HATEOAS, gestion d'erreur
+
+### 1. Test traduction polonaise - JSON
+GET http://localhost:3000/categories
+Accept-Language: pl
+Accept: application/json
+
+### 2. Test traduction espagnole - JSON
+GET http://localhost:3000/categories
+Accept-Language: es
+Accept: application/json
+
+### 3. Test traduction française - JSON (pas de traduction car langue source)
+GET http://localhost:3000/categories
+Accept-Language: fr
+Accept: application/json
+
+### 4. Test traduction polonaise - CSV
+GET http://localhost:3000/categories
+Accept-Language: pl
+Accept: text/csv
+
+### 5. Test traduction polonaise - XML
+GET http://localhost:3000/categories
+Accept-Language: pl
+Accept: application/xml
+
+### 6. Test traduction polonaise avec livres et relations
+GET http://localhost:3000/books
+Accept-Language: pl
+Accept: application/json
+
+### 7. Test HATEOAS + traduction polonaise avec pagination
+GET http://localhost:3000/books?page=1&itemsPerPage=2
+Accept-Language: pl
+Accept: application/json
+
+### 8. Test livre spécifique avec relations et traduction
+GET http://localhost:3000/books/2
+Accept-Language: pl
+Accept: application/json
+
+### 9. Test gestion d'erreur - ressource non trouvée
+GET http://localhost:3000/categories/999
+Accept-Language: pl
+Accept: application/json
+
+### 10. Test gestion d'erreur - validation de données
+POST http://localhost:3000/categories
+Accept-Language: pl
+Accept: application/json
+Content-Type: application/json
+
+{
+  "invalid": "data"
+}
+
+### 11. Test traduction avec auteurs
+GET http://localhost:3000/authors
+Accept-Language: pl
+Accept: application/json
+
+### 12. Test combiné - HATEOAS + traduction + XML + pagination
+GET http://localhost:3000/categories?page=1&itemsPerPage=1
+Accept-Language: pl
+Accept: application/xml
+
+### 13. Test avec utilisateurs (pas de champs traduisibles)
+GET http://localhost:3000/users
+Accept-Language: pl
+Accept: application/json

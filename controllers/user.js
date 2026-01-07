@@ -1,9 +1,23 @@
 const UserModel = require("../models/user.js");
+const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
+
     const users = await UserModel.findAll();
     res.render(users);
+    const apiVersion = getAskedVersion(req);
+    res.json(await UserModel.findAll());
+    const { pagination, filters } = res.getPagination();
+    
+    const { count, rows: users } = await UserModel.findAndCountAll({
+      where: filters,
+      ...pagination,
+    });
+    
+    res.setHateoas({ count });
+    
+    res.json(users);
   },
   post: async (req, res, next) => {
     const newData = req.body;

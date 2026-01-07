@@ -10,6 +10,8 @@ app.use(express.json());
 
 app.use(translateMiddleware); 
 app.use(formatingMiddleware); 
+app.use(hateoasMiddleware);
+app.use(versioningMiddleware);
 app.use(require("./routes/users.js")); 
 app.use(require("./routes/books.js"));
 app.use(require("./routes/authors.js"));

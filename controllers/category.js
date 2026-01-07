@@ -1,9 +1,20 @@
 const CategoryModel = require("../models/category.js");
+const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
+    const apiVersion = getAskedVersion(req);
     const categories = await CategoryModel.findAll();
     res.render(categories);
+    const { pagination, filters } = res.getPagination();
+    
+    const { count, rows: categories } = await CategoryModel.findAndCountAll({
+      where: filters,
+      ...pagination,
+    });
+    
+    res.setHateoas({ count });
+    
     const translatedCategories = categories.map((category) => {
       const categoryData = category.toJSON();
       categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;

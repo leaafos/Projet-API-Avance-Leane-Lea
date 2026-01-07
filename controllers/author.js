@@ -1,10 +1,30 @@
 const AuthorModel = require("../models/author.js");
+
 const Papa = require("papaparse");
 
 module.exports = {
   cget: async (req, res, next) => {
     const authors = await AuthorModel.findAll();
     res.render(authors);
+const getAskedVersion = require("../lib/versioning.js");
+
+module.exports = {
+  cget: async (req, res, next) => {
+
+    const apiVersion = getAskedVersion(req);
+    res.json(await AuthorModel.findAll());
+    const { pagination, filters } = res.getPagination();
+    
+    const { count, rows: authors } = await AuthorModel.findAndCountAll({
+      where: filters,
+      ...pagination,
+    });
+    
+    // Configurer HATEOAS avec le nombre total d'éléments
+    res.setHateoas({ count });
+    
+    res.json(authors);
+
   },
   post: async (req, res, next) => {
     console.log('req.body:', req.body);

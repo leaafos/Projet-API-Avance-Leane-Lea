@@ -1,7 +1,9 @@
 const CategoryModel = require("../models/category.js");
+const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
+    const apiVersion = getAskedVersion(req);
     const categories = await CategoryModel.findAll();
     const translatedCategories = categories.map((category) => {
       const categoryData = category.toJSON();

@@ -1,7 +1,9 @@
 const UserModel = require("../models/user.js");
+const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
+    const apiVersion = getAskedVersion(req);
     res.json(await UserModel.findAll());
   },
   post: async (req, res, next) => {

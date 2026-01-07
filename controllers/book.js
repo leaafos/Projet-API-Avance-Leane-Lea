@@ -1,8 +1,35 @@
 const BookModel = require("../models/book.js");
 const { Author, Category } = require("../models/associations");
+const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
+  cgetV2: async (req, res, next) => {
+    const apiVersion = getAskedVersion(req);
+    const books = await BookModel.findAll({
+      include: [
+        { model: Author, as: 'author' },
+        { model: Category, as: 'category' }
+      ]
+    });
+      const translatedBooks = books.map((book) => {
+      const bookData = book.toJSON();
+      bookData.name_translated = res.trad(bookData.name) || bookData.name;
+      if (bookData.category) {
+        bookData.category.name_translated = res.trad(bookData.category.name) || bookData.category.name;
+      }
+      return bookData;
+    });
+    
+    res.json(translatedBooks);
+  },
+
+  cgetV1: async (req, res, next) => {
+    const apiVersion = getAskedVersion(req);
+    res.json(await BookModel.findAll());
+  },
+
   cget: async (req, res, next) => {
+    const apiVersion = getAskedVersion(req);
     const books = await BookModel.findAll({
       include: [
         { model: Author, as: 'author' },

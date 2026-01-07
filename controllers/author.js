@@ -1,7 +1,9 @@
 const AuthorModel = require("../models/author.js");
+const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
   cget: async (req, res, next) => {
+    const apiVersion = getAskedVersion(req);
     res.json(await AuthorModel.findAll());
   },
   post: async (req, res, next) => {

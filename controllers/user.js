@@ -2,7 +2,17 @@ const UserModel = require("../models/user.js");
 
 module.exports = {
   cget: async (req, res, next) => {
-    res.json(await UserModel.findAll());
+    const { pagination, filters } = res.getPagination();
+    
+    const { count, rows: users } = await UserModel.findAndCountAll({
+      where: filters,
+      ...pagination,
+    });
+    
+    // Configurer HATEOAS avec le nombre total d'éléments
+    res.setHateoas({ count });
+    
+    res.json(users);
   },
   post: async (req, res, next) => {
     const newData = req.body;

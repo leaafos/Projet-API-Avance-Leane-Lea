@@ -2,7 +2,16 @@ const CategoryModel = require("../models/category.js");
 
 module.exports = {
   cget: async (req, res, next) => {
-    const categories = await CategoryModel.findAll();
+    const { pagination, filters } = res.getPagination();
+    
+    const { count, rows: categories } = await CategoryModel.findAndCountAll({
+      where: filters,
+      ...pagination,
+    });
+    
+    // Configurer HATEOAS avec le nombre total d'éléments
+    res.setHateoas({ count });
+    
     const translatedCategories = categories.map((category) => {
       const categoryData = category.toJSON();
       categoryData.name_translated = res.trad(categoryData.name) || categoryData.name;

@@ -6,6 +6,7 @@ const translateMiddleware = require('./middlewares/translateMiddleware.js');
 const hateoasMiddleware = require('./middlewares/hateoasMiddleware.js');
 const validationMiddleware = require('./middlewares/validation.js');
 const errorHandlerMiddleware = require('./middlewares/errorHandler.js');
+const versioningMiddleware = require('./middlewares/versioningMiddleware.js');
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(translateMiddleware);
 app.use(formatingMiddleware); 
 app.use(hateoasMiddleware);
 app.use(validationMiddleware);
+app.use(versioningMiddleware);
+
 app.use(require("./routes/users.js")); 
 app.use(require("./routes/books.js"));
 app.use(require("./routes/authors.js"));

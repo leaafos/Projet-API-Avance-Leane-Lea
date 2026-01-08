@@ -1,7 +1,21 @@
 const AuthorModel = require("../models/author.js");
-const getAskedVersion = require("../lib/versioning.js");
+// const getAskedVersion = require("../lib/versioning.js");
 
 module.exports = {
+  cgetV1: async (req, res, next) => {
+  try {
+    // const apiVersion = getAskedVersion(req);
+    const authors = await AuthorModel.findAll();
+    return res.render(authors);
+  } catch (error) {
+    return next(error);
+  }
+},
+
+  cgetV2: async (req, res, next) => {
+  // const apiVersion = getAskedVersion(req);
+    return module.exports.cget(req, res, next); 
+},
   cget: async (req, res, next) => {
     try {
       const { pagination, filters } = res.getPagination();

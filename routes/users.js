@@ -1,10 +1,18 @@
 const { Router } = require("express");
 const UserController = require("../controllers/user.js");
+const apiVersioning = require("../middlewares/versioningMiddleware.js");
 
 const router = new Router();
 
 // Collection GET
-router.get("/users", UserController.cget);
+router.get(
+  "/users",
+  apiVersioning({
+    v1: UserController.cgetV1,
+    v2: UserController.cgetV2,
+    default: UserController.cget,
+  })
+);
 
 // Collection POST
 router.post("/users", UserController.post);
